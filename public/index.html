@@ -103,8 +103,8 @@
         let mainContainer = document.querySelector('main')
 
         async function fetchStockData() {
-            let stock_ticker = tickerInput.value
-            if (!stock_ticker) { return } // guard clause to return out of the function if it is not the stock ticker.
+            let ticker = tickerInput.value
+            if (!ticker) { return } // guard clause to return out of the function if it is not the stock ticker.
 
             try {
                 const backend_url = '/api'
@@ -117,7 +117,7 @@
                 }
 
                 const res = await fetch(backend_url, options) // fetch api information
-                const { prices } = await res.json()
+                const { data } = await res.json()
                 mainContainer.innerText = prices.join('\n')
                 console.log(res.status)
 
