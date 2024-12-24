@@ -104,20 +104,23 @@
 
         async function fetchStockData() {
             let stock_ticker = tickerInput.value
-            if (!stock_ticker) { return }
+            if (!stock_ticker) { return } // guard clause to return out of the function if it is not the stock ticker.
 
             try {
                 const backend_url = '/api'
-                const options = {
+                const options = { //context of how to expect information
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
                     },
-                    body: JSON.stringify({ stock_ticker })
+                    body: JSON.stringify({ stock_ticker }) //object literal syntax - don't need to put the key and the value, just the one word will do it.
                 }
-                const res = await fetch(backend_url, options)
+
+                const res = await fetch(backend_url, options) // fetch api information
                 const { prices } = await res.json()
                 mainContainer.innerText = prices.join('\n')
+                console.log(res.status)
+
             } catch (err) {
                 console.log(err.message)
             }
