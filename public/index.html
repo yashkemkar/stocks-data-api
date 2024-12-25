@@ -103,30 +103,33 @@
         let mainContainer = document.querySelector('main')
 
         async function fetchStockData() {
-            let ticker = tickerInput.value
-            if (!ticker) { return } // guard clause to return out of the function if it is not the stock ticker.
+            let stock_ticker = tickerInput.value
+            if (!stock_ticker) { return }
 
             try {
                 const backend_url = '/api'
-                const options = { //context of how to expect information
+                const options = {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
                     },
-                    body: JSON.stringify({ stock_ticker }) //object literal syntax - don't need to put the key and the value, just the one word will do it.
+                    body: JSON.stringify({ stock_ticker })
                 }
-
-                const res = await fetch(backend_url, options) // fetch api information
-                const { data } = await res.json()
+                const res = await fetch(backend_url, options)
+                const { prices } = await res.json()
                 mainContainer.innerText = prices.join('\n')
-                console.log(res.status)
-
             } catch (err) {
                 console.log(err.message)
             }
         }
 
         sendBtn.addEventListener('click', fetchStockData)
+        tickerInput.addEventListener('keypress', function (e) {
+            if (event.key ==='Enter'){
+                event.preventDefault()
+                fetchStockData()
+            }
+        })
     </script>
 </body>
 
