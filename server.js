@@ -11,7 +11,10 @@ async function scrapeData(ticker,type) {
     if (!url) { return }
     
     // Launch a new browser instance
-    const browser = await puppeteer.launch({executablePath: '/path/to/Chrome'})
+    const browser = await puppeteer.launch({headless:true,
+        executablePath: `/usr/bin/google-chrome`,
+        args: [`--no-sandbox`, `--headless`, `--disable-gpu`, `--disable-dev-shm-usage`]
+    })
 
     // Open a new page in the browser
     const page = await browser.newPage()
